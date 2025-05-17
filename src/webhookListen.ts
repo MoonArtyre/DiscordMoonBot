@@ -42,12 +42,12 @@ app.post("/GitPost", async (req, res) => {
     await child_process.execSync("git pull")
     const downloadTime = Date.now() - startTime
     embed.setFields({ name: "Download Status", value: `Completed in ${downloadTime}ms` })
-    statusMessage.edit({ embeds: [embed] })
+    await statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm i")
     const installTime = Date.now() - startTime
     embed.setFields({ name: "Install Status", value: `Completed in ${installTime}ms` })
-    statusMessage.edit({ embeds: [embed] })
+    await statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm run build")
 })

@@ -31,15 +31,23 @@ app.post("/GitPost", async (req, res) => {
     const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
     const embed = new EmbedBuilder()
         .setColor(0x0099FF)
-        .setDescription('Updating Bot')
-        .addFields({ name: "downloadField", value: "Downloading..." })
+        .setTitle('Updating Bot')
+        .addFields({ name: "Download Status", value: "Downloading..." })
+        .addFields({ name: "Install Status", value: "Waiting." })
+        .addFields({ name: "Restart Status", value: "Waiting." })
 
     const statusMessage = await statusTextChannel.send({ embeds: [embed] })
-    //const startTime = Date.now()
+    const startTime = Date.now()
 
     await child_process.execSync("git pull")
+    const downloadTime = Date.now() - startTime
+    embed.setFields({ name: "Download Status", value: `Completed in ${downloadTime}ms` })
+    statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm i")
+    const installTime = Date.now() - startTime
+    embed.setFields({ name: "Install Status", value: `Completed in ${installTime}ms` })
+    statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm run build")
 })

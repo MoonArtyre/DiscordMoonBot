@@ -1,7 +1,7 @@
 import { Client, Events, GatewayIntentBits, Message, TextChannel } from "discord.js"
 import { config } from "./config"
 import "./webhookListen"
-
+import child_process from "child_process"
 // Create a new client instance
 const client = new Client({
     intents: [
@@ -23,6 +23,13 @@ const AllowedChannels = [
 ]
 
 const StatusChannel = "1373352030655217735"
+const ngrokHost = child_process.spawn("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
+
+ngrokHost.on('close', (code) => {
+    if (code !== 0) {
+        console.log(`grep process exited with code ${code}`);
+    }
+})
 
 client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)

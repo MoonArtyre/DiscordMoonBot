@@ -32,21 +32,31 @@ app.post("/GitPost", async (req, res) => {
     const embed = new EmbedBuilder()
         .setColor(0x0099FF)
         .setTitle('Updating Bot')
-        .addFields({ name: "Download Status", value: "Downloading..." })
-        .addFields({ name: "Install Status", value: "Waiting." })
-        .addFields({ name: "Restart Status", value: "Waiting." })
+        .setFields(
+            { name: "Download Status", value: "Downloading..." },
+            { name: "Install Status", value: "Waiting..." },
+            { name: "Restart Status", value: "Waiting..." }
+        )
 
     const statusMessage = await statusTextChannel.send({ embeds: [embed] })
     const startTime = Date.now()
 
     await child_process.execSync("git pull")
     const downloadTime = Date.now() - startTime
-    embed.setFields({ name: "Download Status", value: `Completed in ${downloadTime}ms` })
+    embed.setFields(
+        { name: "Download Status", value: `Completed in ${downloadTime}ms` },
+        { name: "Install Status", value: "Installing..." },
+        { name: "Restart Status", value: "Waiting..." }
+    )
     await statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm i")
     const installTime = Date.now() - startTime
-    embed.setFields({ name: "Install Status", value: `Completed in ${installTime}ms` })
+    embed.setFields(
+        { name: "Download Status", value: `Completed in ${downloadTime}ms` },
+        { name: "Install Status", value: `Completed in ${installTime}ms` },
+        { name: "Restart Status", value: "Attempting restart" }
+    )
     await statusMessage.edit({ embeds: [embed] })
 
     await child_process.execSync("npm run build")

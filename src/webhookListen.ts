@@ -33,6 +33,7 @@ app.get("/", async (req, res) => {
 })
 
 app.listen(PORT, () => console.log("Server running on ${PORT}"))
+child_process.exec("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
 
 async function verifySignature(secret: string, signature: string, payload: Buffer): Promise<boolean> {
     const expectedHMAC = "sha256"

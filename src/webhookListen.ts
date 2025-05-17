@@ -2,6 +2,8 @@ import express from "express"
 import crypto from "crypto"
 import { config } from "./config"
 import child_process from "child_process"
+import { client, StatusChannel } from "."
+import { TextChannel } from "discord.js"
 
 const app = express()
 const PORT = 3000
@@ -23,6 +25,16 @@ app.post("/GitPost", async (req, res) => {
     }
 
     res.status(200).end()
+
+    //send message to status channel
+    const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
+
+    if (statusTextChannel == null) {
+        console.error(`Could not fetch status channel ${StatusChannel}`)
+        return
+    }
+
+    await statusTextChannel.send(`Updating bot`)
     await child_process.execSync("git pull")
     await child_process.execSync("npm i")
     await child_process.execSync("npm run build")

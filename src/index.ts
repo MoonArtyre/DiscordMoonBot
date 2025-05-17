@@ -4,7 +4,7 @@ import "./webhookListen"
 import child_process from "child_process"
 
 // Create a new client instance
-const client = new Client({
+export const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.MessageContent,
@@ -24,7 +24,7 @@ const AllowedChannels = [
     "1373352030655217735"
 ]
 
-const StatusChannel = "1373352030655217735"
+export const StatusChannel = "1373352030655217735"
 //#endregion
 
 //#region Ngrok child process hosting

@@ -1,11 +1,14 @@
 import express from "express"
 import crypto from "crypto"
 import { config } from "./config"
+import child_process from "child_process"
 
 const app = express()
 const PORT = 80
-//teest
+
 app.use(express.raw({ type: '*/*' }))
+
+//#region Github webhook listener
 app.post("/GitPost", async (req, res) => {
     const sig = req.headers["x-hub-signature-256"]
 
@@ -20,12 +23,19 @@ app.post("/GitPost", async (req, res) => {
     }
 
     res.status(200).end()
+    child_process.exec("git pull")
+})
+//#endregion
+
+app.get("/", async (req, res) => {
+    res.status(200)
+    res.send("Holaaaa, this is a very cool message<br/><h1>Boop</h1>")
 })
 
 app.listen(PORT, () => console.log("Server running on ${PORT}"))
 
-async function verifySignature(secret: string, signature: string, payload: string): Promise<boolean> {
-    //Webhook sends "hashEncoder=hash" <= (honestly not sure lol), so we split this to use both parts for verification
+async function verifySignature(secret: string, signature: string, payload: Buffer): Promise<boolean> {
+    const expectedHMAC = "sha256"
     const splitSignature = signature.split("=")
 
     const postHMAC = splitSignature[0]
@@ -33,5 +43,9 @@ async function verifySignature(secret: string, signature: string, payload: strin
 
     const signatureCheck = crypto.createHmac(postHMAC, secret).update(payload).digest("hex")
 
-    return signatureCheck === postSignature;
+    if (!crypto.timingSafeEqual(Buffer.from(expectedHMAC), Buffer.from(postHMAC)) || !crypto.timingSafeEqual(Buffer.from(postSignature), Buffer.from(signatureCheck))) {
+        return false
+    }
+
+    return true
 }

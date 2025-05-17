@@ -3,7 +3,7 @@ import bodyParser from "body-parser"
 
 const app = express()
 const PORT = 80
-
+//teest
 app.use(bodyParser.json())
 app.post("", (req, res) => {
     console.log(req.body)

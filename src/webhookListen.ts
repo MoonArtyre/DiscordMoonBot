@@ -29,18 +29,18 @@ app.post("/GitPost", async (req, res) => {
 
     //send message to status channel
     const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
-
-    await statusTextChannel.send(`Updating bot...`)
+    const statusMessage = await statusTextChannel.send(`Updating Bot...\nStatus: Downloading...`)
 
     const startTime = Date.now()
-    await child_process.execSync("git pull")
 
+    await child_process.execSync("git pull")
     const updateProcessTime = Date.now() - startTime
-    await statusTextChannel.send(`Update completed in ${updateProcessTime}ms`)
+    statusMessage.edit(`Updating Bot...\nStatus: Installing...\nDownload: Completed in ${updateProcessTime}`)
 
     await child_process.execSync("npm i")
+    const installProcessTime = Date.now() - startTime
+    statusMessage.edit(`Updating Bot...\nStatus: restarting...\nDownload: Completed in ${updateProcessTime}\nInstall: Completed in ${installProcessTime}`)
 
-    await statusTextChannel.send(`Rebuilding and restarting Bot...`)
     await child_process.execSync("npm run build")
 })
 //#endregion

@@ -54,17 +54,3 @@ async function ReadMessage(message: Message) {
 }
 
 client.login(config.DISCORD_TOKEN);
-
-process.on("beforeExit", async () => {
-    const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
-    await statusTextChannel.send(`Bot shutting down...`)
-
-    process.exit()
-})
-
-process.on('SIGTERM', async () => {
-    const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
-    await statusTextChannel.send(`Attempting restart...`)
-
-    process.exit()
-});

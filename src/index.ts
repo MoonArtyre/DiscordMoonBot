@@ -63,7 +63,7 @@ async function ReadMessage(message: Message) {
         return
 
     if (messageContent === "hi denji") {
-        message.reply("Hey " + message.author.displayName)
+        message.reply("Hey hey" + message.author.displayName)
     }
 }
 

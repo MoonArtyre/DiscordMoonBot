@@ -12,7 +12,10 @@ export const client = new Client({
     ]
 })
 
-//#region discord Ids
+// Create Ngrok Host
+child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "3000"])
+
+// Discord Ids for allowed channels
 const AllowedServers = [
     "813104517142937681",
     "1146795649162018857"
@@ -26,19 +29,6 @@ const AllowedChannels = [
 ]
 
 export const StatusChannel = "1373352030655217735"
-//#endregion
-
-//#region Ngrok child process hosting
-const ngrok = child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "3000"])
-
-ngrok.on('error', (err) => {
-    console.error('Failed to start ngrok:', err);
-});
-
-ngrok.on('close', (code) => {
-    console.log(`ngrok closed with code ${code}`);
-});
-//#endregion
 
 client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)
@@ -64,3 +54,10 @@ async function ReadMessage(message: Message) {
 }
 
 client.login(config.DISCORD_TOKEN);
+
+process.on("beforeExit", async () => {
+    const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
+    await statusTextChannel.send(`Bot shutting down...`)
+
+    process.exit()
+})

@@ -38,8 +38,9 @@ app.post("/GitPost", async (req, res) => {
     const updateProcessTime = Date.now() - startTime
     await statusTextChannel.send(`Update completed in ${updateProcessTime}ms`)
 
-
     await child_process.execSync("npm i")
+
+    await statusTextChannel.send(`Rebuilding and restarting Bot...`)
     await child_process.execSync("npm run build")
 })
 //#endregion

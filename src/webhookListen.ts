@@ -8,6 +8,7 @@ import { TextChannel } from "discord.js"
 const app = express()
 const PORT = 3000
 
+//The web parser
 app.use(express.raw({ type: '*/*' }))
 
 //#region Github webhook listener

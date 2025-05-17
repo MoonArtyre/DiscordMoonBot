@@ -35,7 +35,7 @@ app.post("/GitPost", async (req, res) => {
         .addFields({ name: "downloadField", value: "Downloading..." })
 
     const statusMessage = await statusTextChannel.send({ embeds: [embed] })
-    const startTime = Date.now()
+    //const startTime = Date.now()
 
     await child_process.execSync("git pull")
 

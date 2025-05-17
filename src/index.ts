@@ -38,7 +38,7 @@ client.once(Events.ClientReady, async (readyClient: Client<true>) => {
         .setColor(0x00FF55)
         .setTitle('Bot Started')
         .setFields(
-            { name: "Start Time", value: new Date(Date.now()).toDateString() }
+            { name: "Start Time", value: new Date(Date.now()).toTimeString() }
         )
 
     await statusTextChannel.send({ embeds: [embed] })

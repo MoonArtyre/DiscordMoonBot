@@ -24,6 +24,7 @@ app.post("/GitPost", async (req, res) => {
 
     res.status(200).end()
     child_process.exec("git pull")
+    child_process.exec("npm run build")
 })
 //#endregion
 

@@ -3,7 +3,7 @@ import crypto from "crypto"
 import { config } from "./config"
 import child_process from "child_process"
 import { client, StatusChannel } from "."
-import { TextChannel } from "discord.js"
+import { EmbedBuilder, TextChannel } from "discord.js"
 
 const app = express()
 const PORT = 3000
@@ -29,17 +29,17 @@ app.post("/GitPost", async (req, res) => {
 
     //send message to status channel
     const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
-    const statusMessage = await statusTextChannel.send(`Updating Bot...\nStatus: Downloading...`)
+    const embed = new EmbedBuilder()
+        .setColor(0x0099FF)
+        .setDescription('Updating Bot')
+        .addFields({ name: "downloadField", value: "Downloading..." })
 
+    const statusMessage = await statusTextChannel.send({ embeds: [embed] })
     const startTime = Date.now()
 
     await child_process.execSync("git pull")
-    const updateProcessTime = Date.now() - startTime
-    await statusMessage.edit(`Updating Bot...\nStatus: Installing...\nDownload: Completed in ${updateProcessTime}`)
 
     await child_process.execSync("npm i")
-    const installProcessTime = Date.now() - startTime
-    await statusMessage.edit(`**Updating Bot...**\nStatus: restarting...\nDownload: Completed in ${updateProcessTime}\nInstall: Completed in ${installProcessTime}`)
 
     await child_process.execSync("npm run build")
 })

@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
     res.send("Holaaaa, this is a very cool message<br/><h1>Boop</h1>")
 })
 
-app.listen(PORT, () => console.log("Server running on ${PORT}"))
+app.listen(PORT, () => console.log(`Server running on ${PORT}`))
 child_process.exec("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
 
 async function verifySignature(secret: string, signature: string, payload: Buffer): Promise<boolean> {

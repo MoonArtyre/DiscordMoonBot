@@ -11,14 +11,6 @@ const client = new Client({
     ]
 })
 
-client.once(Events.ClientReady, (readyClient: Client<true>) => {
-    console.log(`Ready! Logged in as ${readyClient.user.tag}`)
-});
-
-client.on(Events.MessageCreate, ReadMessage)
-
-client.login(config.DISCORD_TOKEN);
-
 const AllowedServers = [
     "813104517142937681",
     "1146795649162018857"
@@ -26,9 +18,27 @@ const AllowedServers = [
 
 const AllowedChannels = [
     "946446204617773166",
-    "1217399265190608966"
+    "1217399265190608966",
+    "1373352030655217735"
 ]
 
+const StatusChannel = "1373352030655217735"
+
+client.once(Events.ClientReady, async (readyClient: Client<true>) => {
+    console.log(`Ready! Logged in as ${readyClient.user.tag}`)
+    const statusTextChannel = await readyClient.channels.fetch(StatusChannel) as TextChannel
+
+    if (statusTextChannel == null) {
+        console.error(`Could not fetch status channel ${StatusChannel}`)
+        return
+    }
+
+    await statusTextChannel.send(`Bot started and logged in as ${readyClient.user.tag}`)
+})
+
+client.on(Events.MessageCreate, ReadMessage)
+
+client.login(config.DISCORD_TOKEN);
 
 async function ReadMessage(message: Message) {
     const textChannel = message.channel as TextChannel

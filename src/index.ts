@@ -23,7 +23,7 @@ const AllowedChannels = [
 ]
 
 const StatusChannel = "1373352030655217735"
-const ngrokHost = child_process.spawn("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
+const ngrokHost = child_process.exec("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
 
 ngrokHost.on('close', (code) => {
     if (code !== 0) {

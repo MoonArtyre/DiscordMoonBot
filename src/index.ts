@@ -28,7 +28,7 @@ const StatusChannel = "1373352030655217735"
 //#endregion
 
 //#region Ngrok child process hosting
-const ngrok = child_process.spawn("ngrok", ["http", "--url=tough-eminently-ibex.ngrok-free.app", "80"])
+const ngrok = child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "80"])
 
 ngrok.on('error', (err) => {
     console.error('Failed to start ngrok:', err);

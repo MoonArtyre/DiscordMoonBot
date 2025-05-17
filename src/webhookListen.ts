@@ -27,7 +27,7 @@ app.post("/GitPost", async (req, res) => {
 
     res.status(200).end()
 
-    //send message to status channel 
+    //send message to status channel
     const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
     const embed = new EmbedBuilder()
         .setColor(0x0099FF)

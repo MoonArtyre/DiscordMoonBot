@@ -55,7 +55,7 @@ app.post("/GitPost", async (req, res) => {
     embed.setFields(
         { name: "Download Status", value: `Completed in ${downloadTime}ms` },
         { name: "Install Status", value: `Completed in ${installTime}ms` },
-        { name: "Restart Status", value: "Attempting restart" }
+        { name: "Restart Status", value: `Restarted at ${new Date(Date.now()).toUTCString()}` }
     )
     await statusMessage.edit({ embeds: [embed] })
 

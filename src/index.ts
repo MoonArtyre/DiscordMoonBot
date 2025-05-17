@@ -28,6 +28,7 @@ const AllowedChannels = [
     "1148905118918512650"
 ]
 
+//TODO: Make this into an array, and add a "Send Status" function or something
 export const StatusChannel = "1373352030655217735"
 
 client.once(Events.ClientReady, async (readyClient: Client<true>) => {

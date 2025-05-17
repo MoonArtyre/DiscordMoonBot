@@ -4,7 +4,7 @@ import { config } from "./config"
 import child_process from "child_process"
 
 const app = express()
-const PORT = 80
+const PORT = 3000
 
 app.use(express.raw({ type: '*/*' }))
 

@@ -35,11 +35,11 @@ app.post("/GitPost", async (req, res) => {
 
     await child_process.execSync("git pull")
     const updateProcessTime = Date.now() - startTime
-    statusMessage.edit(`Updating Bot...\nStatus: Installing...\nDownload: Completed in ${updateProcessTime}`)
+    await statusMessage.edit(`Updating Bot...\nStatus: Installing...\nDownload: Completed in ${updateProcessTime}`)
 
     await child_process.execSync("npm i")
     const installProcessTime = Date.now() - startTime
-    statusMessage.edit(`Updating Bot...\nStatus: restarting...\nDownload: Completed in ${updateProcessTime}\nInstall: Completed in ${installProcessTime}`)
+    await statusMessage.edit(`Updating Bot...\nStatus: restarting...\nDownload: Completed in ${updateProcessTime}\nInstall: Completed in ${installProcessTime}`)
 
     await child_process.execSync("npm run build")
 })

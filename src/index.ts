@@ -21,7 +21,8 @@ const AllowedServers = [
 const AllowedChannels = [
     "946446204617773166",
     "1217399265190608966",
-    "1373352030655217735"
+    "1373352030655217735",
+    "1148905118918512650"
 ]
 
 export const StatusChannel = "1373352030655217735"
@@ -43,11 +44,6 @@ client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)
     const statusTextChannel = await readyClient.channels.fetch(StatusChannel) as TextChannel
 
-    if (statusTextChannel == null) {
-        console.error(`Could not fetch status channel ${StatusChannel}`)
-        return
-    }
-
     await statusTextChannel.send(`Bot started and logged in as ${readyClient.user.tag}`)
 })
 
@@ -63,7 +59,7 @@ async function ReadMessage(message: Message) {
         return
 
     if (messageContent === "hi denji") {
-        message.reply("Hey hey" + message.author.displayName)
+        message.reply("Hey hey " + message.author.displayName)
     }
 }
 

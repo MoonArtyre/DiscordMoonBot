@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits, Message, TextChannel } from "discord.js"
 import { config } from "./config"
+import "./webhookListen"
 
 // Create a new client instance
 const client = new Client({

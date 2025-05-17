@@ -49,7 +49,7 @@ async function ReadMessage(message: Message) {
         return
 
     if (messageContent === "hi denji") {
-        message.reply("Hoi " + message.author.displayName)
+        message.reply("Hoii " + message.author.displayName)
     }
 }
 

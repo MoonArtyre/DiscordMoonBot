@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits, Message, TextChannel } from "discord.js"
+import { Client, EmbedBuilder, Events, GatewayIntentBits, Message, TextChannel } from "discord.js"
 import { config } from "./config"
 import "./webhookListen"
 import child_process from "child_process"
@@ -34,7 +34,14 @@ client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)
     const statusTextChannel = await readyClient.channels.fetch(StatusChannel) as TextChannel
 
-    await statusTextChannel.send(`Bot started and logged in as ${readyClient.user.tag}`)
+    const embed = new EmbedBuilder()
+        .setColor(0x00FF55)
+        .setTitle('Bot Started')
+        .setFields(
+            { name: "Start Time", value: new Date(Date.now()).toDateString() }
+        )
+
+    await statusTextChannel.send({ embeds: [embed] })
 })
 
 client.on(Events.MessageCreate, ReadMessage)

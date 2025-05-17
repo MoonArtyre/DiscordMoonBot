@@ -2,6 +2,7 @@ import { Client, Events, GatewayIntentBits, Message, TextChannel } from "discord
 import { config } from "./config"
 import "./webhookListen"
 import child_process from "child_process"
+
 // Create a new client instance
 const client = new Client({
     intents: [
@@ -11,6 +12,7 @@ const client = new Client({
     ]
 })
 
+//#region discord Ids
 const AllowedServers = [
     "813104517142937681",
     "1146795649162018857"
@@ -23,7 +25,19 @@ const AllowedChannels = [
 ]
 
 const StatusChannel = "1373352030655217735"
-child_process.exec("ngrok http --url=tough-eminently-ibex.ngrok-free.app 80")
+//#endregion
+
+//#region Ngrok child process hosting
+const ngrok = child_process.spawn("ngrok", ["http", "--url=tough-eminently-ibex.ngrok-free.app", "80"])
+
+ngrok.on('error', (err) => {
+    console.error('Failed to start ngrok:', err);
+});
+
+ngrok.on('close', (code) => {
+    console.log(`ngrok closed with code ${code}`);
+});
+//#endregion
 
 client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)
@@ -38,9 +52,6 @@ client.once(Events.ClientReady, async (readyClient: Client<true>) => {
 })
 
 client.on(Events.MessageCreate, ReadMessage)
-
-client.login(config.DISCORD_TOKEN);
-
 async function ReadMessage(message: Message) {
     const textChannel = message.channel as TextChannel
     const messageContent = message.content.toLowerCase()
@@ -55,3 +66,5 @@ async function ReadMessage(message: Message) {
         message.reply("Hello " + message.author.displayName)
     }
 }
+
+client.login(config.DISCORD_TOKEN);

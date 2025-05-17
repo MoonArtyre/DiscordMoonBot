@@ -65,4 +65,6 @@ process.on("beforeExit", async () => {
 process.on('SIGTERM', async () => {
     const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
     await statusTextChannel.send(`Attempting restart...`)
+
+    process.exit()
 });

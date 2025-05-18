@@ -14,6 +14,6 @@ export async function ReadMessage(message: Message) {
         return
 
     if (messageContent === "hi denji") {
-        message.reply("Hellooo " + message.author.displayName)
+        message.reply("Helloo " + message.author.displayName)
     }
 }

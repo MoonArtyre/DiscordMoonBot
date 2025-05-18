@@ -20,7 +20,7 @@ child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.
 //Trigger event once, when client is ready
 client.once(Events.ClientReady, OnClientReady)
 
-//Trigger event when message is created from another user
+//Trigger event when message is created from another user 
 client.on(Events.MessageCreate, ReadMessage)
 
 //Login and start the bot

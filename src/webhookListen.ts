@@ -33,7 +33,6 @@ app.post("/GitPost", async (req, res) => {
     InitializeBotUpdateStatus()
 
     //Start update process
-    await child_process.execSync("git reset --hard > /dev/null 2>&1", { stdio: "ignore" })
     await child_process.execSync("git pull")
     StatusUpdate_DownloadFinished()
 

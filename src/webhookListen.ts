@@ -29,7 +29,7 @@ app.post("/GitPost", async (req, res) => {
     //Acknowledge request 
     res.status(200).end()
 
-    //send message to status channel  
+    //send message to status channel 
     InitializeBotUpdateStatus()
 
     //Start update process

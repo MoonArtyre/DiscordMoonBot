@@ -3,7 +3,6 @@ import crypto from "crypto"
 import { config } from "./config"
 import child_process from "child_process"
 import { StatusUpdate_DownloadFinished, InitializeBotUpdateStatus, StatusUpdate_InstallFinished } from "./StatusUpdateManager"
-import { stderr } from "process"
 
 const app = express()
 const PORT = 3000
@@ -30,14 +29,14 @@ app.post("/GitPost", async (req, res) => {
     res.status(200).end()
 
     //send message to status channel   
-    InitializeBotUpdateStatus()
+    await InitializeBotUpdateStatus()
 
     //Start update process
     await child_process.execSync("git pull", { stdio: "ignore" })
-    StatusUpdate_DownloadFinished()
+    await StatusUpdate_DownloadFinished()
 
     await child_process.execSync("npm i")
-    StatusUpdate_InstallFinished()
+    await StatusUpdate_InstallFinished()
 
     await child_process.execSync("npm run build")
 })

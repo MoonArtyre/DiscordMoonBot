@@ -40,7 +40,7 @@ export async function InitializeBotUpdateStatus() {
 }
 
 export async function StatusUpdate_DownloadFinished() {
-    downloadTime = updateStartTimestamp - Date.now()
+    downloadTime = Date.now() - updateStartTimestamp
 
     botUpdateEmbed.setFields(
         { name: "Download Status", value: `Completed in ${downloadTime}ms` },
@@ -52,7 +52,7 @@ export async function StatusUpdate_DownloadFinished() {
 }
 
 export async function StatusUpdate_InstallFinished() {
-    installTime = updateStartTimestamp - Date.now()
+    installTime = Date.now() - updateStartTimestamp
     botUpdateEmbed.setFields(
         { name: "Download Status", value: `Completed in ${downloadTime}ms` },
         { name: "Install Status", value: `Completed in ${installTime}ms` },

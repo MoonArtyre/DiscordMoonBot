@@ -36,7 +36,7 @@ export async function InitializeBotUpdateStatus() {
             { text: `Update started on ${new Date(updateStartTimestamp).toUTCString()}` }
         )
 
-    SendStatus("BotUpdate", botUpdateEmbed)
+    await SendStatus("BotUpdate", botUpdateEmbed)
 }
 
 export async function StatusUpdate_DownloadFinished() {
@@ -48,7 +48,7 @@ export async function StatusUpdate_DownloadFinished() {
         { name: "Restart Status", value: "Waiting..." }
     )
 
-    SendStatus("BotUpdate", botUpdateEmbed)
+    await SendStatus("BotUpdate", botUpdateEmbed)
 }
 
 export async function StatusUpdate_InstallFinished() {
@@ -59,7 +59,7 @@ export async function StatusUpdate_InstallFinished() {
         { name: "Restart Status", value: `Restarted on\n ${new Date(Date.now()).toUTCString()}` }
     )
 
-    SendStatus("BotUpdate", botUpdateEmbed)
+    await SendStatus("BotUpdate", botUpdateEmbed)
 }
 
 async function SendStatus(statusKey: string, statusEmbed: EmbedBuilder) {

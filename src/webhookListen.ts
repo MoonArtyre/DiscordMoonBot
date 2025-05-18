@@ -63,14 +63,16 @@ app.post("/GitPost", async (req, res) => {
 })
 //#endregion
 
+//Generic response to opening the webpage
 app.get("/", async (req, res) => {
     res.status(200)
     res.send("Holaaaa, this is a very cool message<br/><h1>Boop</h1>")
 })
 
+//Start listening to the port
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))
 
-
+//Verify Signature from Github Post
 async function verifySignature(secret: string, signature: string, payload: Buffer): Promise<boolean> {
     const expectedHMAC = "sha256"
     const splitSignature = signature.split("=")
@@ -86,5 +88,3 @@ async function verifySignature(secret: string, signature: string, payload: Buffe
 
     return true
 }
-
-//Hpöa

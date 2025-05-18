@@ -25,11 +25,12 @@ const AllowedChannels = [
     "946446204617773166",
     "1217399265190608966",
     "1373352030655217735",
-    "1148905118918512650"
+    "1148905118918512650",
+    "1373396339819417610"
 ]
 
 //TODO: Make this into an array, and add a "Send Status" function or something
-export const StatusChannel = "1373352030655217735"
+export const StatusChannel = "1373396339819417610"
 
 client.once(Events.ClientReady, async (readyClient: Client<true>) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`)

@@ -2,8 +2,7 @@ import express from "express"
 import crypto from "crypto"
 import { config } from "./config"
 import child_process from "child_process"
-import { client, StatusChannel } from "."
-import { EmbedBuilder, TextChannel } from "discord.js"
+import { StatusUpdate_DownloadFinished, InitializeBotUpdateStatus, StatusUpdate_InstallFinished } from "./StatusUpdateManager"
 
 const app = express()
 const PORT = 3000
@@ -11,8 +10,9 @@ const PORT = 3000
 //The web parser
 app.use(express.raw({ type: '*/*' }))
 
-//#region Github webhook listener 
+//Githup wehook handler
 app.post("/GitPost", async (req, res) => {
+    //Verify request
     const sig = req.headers["x-hub-signature-256"]
 
     if (sig == null || Array.isArray(sig)) {
@@ -25,43 +25,21 @@ app.post("/GitPost", async (req, res) => {
         return
     }
 
+    //Acknowledge request
     res.status(200).end()
 
     //send message to status channel
-    const statusTextChannel = await client.channels.fetch(StatusChannel) as TextChannel
-    const embed = new EmbedBuilder()
-        .setColor(0x0099FF)
-        .setTitle('Updating Bot')
-        .setFields(
-            { name: "Download Status", value: "Downloading..." },
-            { name: "Install Status", value: "Waiting..." },
-            { name: "Restart Status", value: "Waiting..." }
-        )
+    InitializeBotUpdateStatus()
 
-    const statusMessage = await statusTextChannel.send({ embeds: [embed] })
-    const startTime = Date.now()
-
+    //Start update process
     await child_process.execSync("git pull")
-    const downloadTime = Date.now() - startTime
-    embed.setFields(
-        { name: "Download Status", value: `Completed in ${downloadTime}ms` },
-        { name: "Install Status", value: "Installing..." },
-        { name: "Restart Status", value: "Waiting..." }
-    )
-    await statusMessage.edit({ embeds: [embed] })
+    StatusUpdate_DownloadFinished()
 
     await child_process.execSync("npm i")
-    const installTime = Date.now() - startTime
-    embed.setFields(
-        { name: "Download Status", value: `Completed in ${downloadTime}ms` },
-        { name: "Install Status", value: `Completed in ${installTime}ms` },
-        { name: "Restart Status", value: `Restarted on\n ${new Date(Date.now()).toUTCString()}` }
-    )
-    await statusMessage.edit({ embeds: [embed] })
+    StatusUpdate_InstallFinished()
 
     await child_process.execSync("npm run build")
 })
-//#endregion
 
 //Generic response to opening the webpage
 app.get("/", async (req, res) => {

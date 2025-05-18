@@ -18,7 +18,7 @@ export const client = new Client({
 child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "3000"])
 
 //Trigger event once, when client is ready
-client.once(Events.ClientReady, (readyClient: Client<true>) => OnClientReady(readyClient))
+client.once(Events.ClientReady, OnClientReady)
 
 //Trigger event when message is created from another user
 client.on(Events.MessageCreate, ReadMessage)

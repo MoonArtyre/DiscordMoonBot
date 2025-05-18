@@ -26,7 +26,7 @@ app.post("/GitPost", async (req, res) => {
         return
     }
 
-    //Acknowledge request
+    //Acknowledge request 
     res.status(200).end()
 
     //send message to status channel 

@@ -5,7 +5,7 @@ import child_process from "child_process"
 import { StatusUpdate_DownloadFinished, InitializeBotUpdateStatus, StatusUpdate_InstallFinished } from "./StatusUpdateManager"
 
 const app = express()
-const PORT = 8080
+const PORT = 3001
 
 //The web parser
 app.use(express.raw({ type: '*/*' }))

@@ -15,7 +15,7 @@ export const client = new Client({
 })
 
 // Create Ngrok Host
-child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "3000"])
+//child_process.spawn("ngrok", ["http", "--domain=tough-eminently-ibex.ngrok-free.app", "3000"])
 
 //Trigger event once, when client is ready
 client.once(Events.ClientReady, OnClientReady)

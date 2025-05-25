@@ -48,7 +48,7 @@ app.get("/", async (req, res) => {
 })
 
 //Start listening to the port
-app.listen(PORT, () => console.log(`Server running on ${PORT}`))
+app.listen(PORT, '::', () => console.log(`Server running on ${PORT}`))
 
 //Verify Signature from Github Post
 async function verifySignature(secret: string, signature: string, payload: Buffer): Promise<boolean> {

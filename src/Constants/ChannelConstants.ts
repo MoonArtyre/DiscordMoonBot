@@ -13,7 +13,7 @@ const AllowedChannels = [
 ]
 
 //TODO: Make this into an array, and add a "Send Status" function or something
-const StatusChannel = "1373396339819417610"
+const StatusChannel = "1373352030655217735"
 
 export {
     AllowedChannels,

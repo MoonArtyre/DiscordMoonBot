@@ -1,7 +1,7 @@
 import { Client, Events, GatewayIntentBits } from "discord.js"
 import { config } from "./config"
 import "./webhookListen"
-import child_process from "child_process"
+//import child_process from "child_process"
 import { ReadMessage } from "./TextChannelManager"
 import { OnClientReady } from "./DiscordBotClient"
 
